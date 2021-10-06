@@ -1,15 +1,18 @@
 ﻿@page
-@model Agenda.Pages.Categorias.CrearModel
+@model Agenda.Pages.Categorias.EditarModel
 @{
-    ViewData["Title"] = "Crear una Categoría";
+    ViewData["Title"] = "Editar una Categoría";
 }
 
 <div class="container">
     <div class="row">
         <div class="col-8 offset-2">
-            <div class="text-info">Crear una Nueva Categoría</div>
+            <h2 class="text-info">Editar una Categoría</h2>
 
             <form method="POST">
+
+                <input type="hidden" asp-for="Categoria.Id" />
+
                 <div class="mb-3">
                     <label asp-for="Categoria.Nombre" class="form-label"></label>
                     <input asp-for="Categoria.Nombre" class="form-control" placeholder="Ingresa el nombre" />
@@ -22,7 +25,7 @@
                     <span asp-validation-for="Categoria.FechaCreacion" class="text-danger"></span>
                 </div>
 
-                <button type="submit" class="btn btn-primary">Crear Categoría</button>
+                <button type="submit" class="btn btn-primary">Editar Categoría</button>
             </form>
         </div>
     </div>

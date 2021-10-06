@@ -9,11 +9,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Agenda.Pages.Categorias
 {
-    public class CrearModel : PageModel
+    public class BorrarModel : PageModel
     {
         private readonly ApplicationDbContext _contexto;
 
-        public CrearModel (ApplicationDbContext contexto)
+        public BorrarModel(ApplicationDbContext contexto)
         {
             _contexto = contexto;
         }
@@ -22,23 +22,25 @@ namespace Agenda.Pages.Categorias
         public Categoria Categoria { get; set; }
 
 
-        public void OnGet()
+        public async void OnGet(int id)
         {
-
+            Categoria = await _contexto.Categoria.FindAsync(id);
         }
 
         public async Task<IActionResult> OnPost()
         {
-            if(ModelState.IsValid)
+            var CategoriaDesdeDb = await _contexto.Categoria.FindAsync(Categoria.Id);
+
+            if(CategoriaDesdeDb == null)
             {
-                await _contexto.Categoria.AddAsync(Categoria);
-                await _contexto.SaveChangesAsync();
-                return RedirectToPage("Index");
+                return NotFound();
             }
-            else
-            {
-                return Page();
-            }
+
+            _contexto.Categoria.Remove(CategoriaDesdeDb);
+            await _contexto.SaveChangesAsync();
+            return RedirectToPage("Index");
+            
         }
+
     }
 }
